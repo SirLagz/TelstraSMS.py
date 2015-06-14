@@ -6,11 +6,10 @@ import datetime
 import sys
 
 if len(sys.argv) < 4:
-    sys.exit("Usage: telstrasms.py RECIPIENT SUBJECT BODY")
+    sys.exit("Usage: telstrasms.py RECIPIENT MESSAGE")
 
 smsrcpt = sys.argv[1]
 subject = sys.argv[2]
-body = sys.argv[3]
 
 key="YOURKEYHERE"
 secret="YOURSECRETHERE"
@@ -40,7 +39,7 @@ if expires < now:
 else:
     print "not expired"
 
-smsdata = { 'to':smsrcpt, 'body':subject+" "+body }
+smsdata = { 'to':smsrcpt, 'body':subject }
 headers = { 'Content-type':'application/json','Authorization':'Bearer '+str(authtoken) }
 url = "https://api.telstra.com/v1/sms/messages"
 

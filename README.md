@@ -5,6 +5,8 @@ This python script was designed to be used with Zabbix, however it's a generic s
 
 Usage is telstrasms.py RECIPIENT MESSSAGE
 
+Details on how I'm using it is available here - http://sirlagz.net/2015/06/15/using-the-telstra-sms-api-with-zabbix/
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or

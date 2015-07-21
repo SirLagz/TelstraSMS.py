@@ -5,7 +5,7 @@ import json
 import datetime
 import sys
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 3:
     sys.exit("Usage: telstrasms.py RECIPIENT MESSAGE")
 
 smsrcpt = sys.argv[1]

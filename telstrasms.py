@@ -18,15 +18,7 @@ now = datetime.datetime.today()
 authfile = '/tmp/telstraauth'
 
 
-f = open(authfile,'r+')
-filetoken = f.read()
-f.close()
-dicttoken = json.loads(filetoken)
-authtoken = dicttoken["access_token"]
-dtobj = datetime.datetime.strptime(dicttoken["datetime"], '%Y-%m-%d %H:%M:%S.%f')
-expires = dtobj + datetime.timedelta(0,int(dicttoken["expires_in"]))
-if expires < now:
-    print "expired"
+def GetAuthToken( url, now, key, secret ):
     response = urllib2.urlopen(url)
     newtokendict = json.loads(response.read())
     newtokendict["datetime"] = str(now)
@@ -36,8 +28,25 @@ if expires < now:
     print "new token : "+newjsontoken
     f.write(newjsontoken)
     f.close()
-else:
-    print "not expired"
+    return authtoken
+
+f = open(authfile,'a+')
+filetoken = f.read()
+f.close()
+try:
+    dicttoken = json.loads(filetoken)
+    authtoken = dicttoken["access_token"]
+    dtobj = datetime.datetime.strptime(dicttoken["datetime"], '%Y-%m-%d %H:%M:%S.%f')
+    expires = dtobj + datetime.timedelta(0,int(dicttoken["expires_in"]))
+    if expires < now:
+        print "expired"
+        authtoken = GetAuthToken(url, now, key, secret)
+    else:
+        print "not expired"
+except ValueError:
+    print "Invalid JSON. Retrieving new token"
+    authtoken = GetAuthToken(url, now, key, secret)
+
 
 smsdata = { 'to':smsrcpt, 'body':subject }
 headers = { 'Content-type':'application/json','Authorization':'Bearer '+str(authtoken) }
@@ -45,3 +54,4 @@ url = "https://api.telstra.com/v1/sms/messages"
 
 req = urllib2.Request(url,headers=headers,data=json.dumps(smsdata))
 msg = urllib2.urlopen(req)
+print msg

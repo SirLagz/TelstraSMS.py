@@ -12,10 +12,8 @@ smsrcpt = sys.argv[1]
 subject = sys.argv[2]
 body = sys.argv[3]
 
-#key="YOURKEYHERE"
-#secret="YOURSECRETHERE"
-key="uTX3GbN9BrL65h7A9sZmAA2ene9RJKHD"
-secret="AnoDxO98GnHX6Cjm"
+key="YOURKEYHERE"
+secret="YOURSECRETHERE"
 url="https://api.telstra.com/v1/oauth/token?client_id="+key+"&client_secret="+secret+"&grant_type=client_credentials&scope=SMS"
 now = datetime.datetime.today()
 authfile = '/tmp/telstraauth'

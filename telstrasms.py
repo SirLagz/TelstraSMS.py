@@ -54,4 +54,4 @@ url = "https://api.telstra.com/v1/sms/messages"
 
 req = urllib2.Request(url,headers=headers,data=json.dumps(smsdata))
 msg = urllib2.urlopen(req)
-print msg
+print msg.read()
